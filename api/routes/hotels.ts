@@ -1,8 +1,8 @@
-const { Router } = require('express')
+import { Router } from 'express'
 
 const router = Router()
 
-const hotels = [
+const hotelsJson = [
   {
     id: 1,
     name: 'Hotel Enjoy',
@@ -26,14 +26,14 @@ const hotels = [
 ]
 
 /* GET users listing. */
-router.get('/hotels', function(req, res, next) {
-  res.json(hotels)
+router.get('/hotels', function(req: any, res: any, next: any) {
+  res.json(hotelsJson)
 })
 
 /* GET user by ID. */
-router.get('/hotels/:id', function(req, res, next) {
+router.get('/hotels/:id', function(req: any, res: any, next: any) {
   const id = parseInt(req.params.id)
-  const hotel = hotels.filter((x) => x.id == id)
+  const hotel = hotelsJson.filter((x) => x.id == id)
   if (hotel.length == 1) {
     res.json(hotel[0])
   } else if (hotel.length == 0) {
@@ -43,4 +43,5 @@ router.get('/hotels/:id', function(req, res, next) {
   }
 })
 
-module.exports = router
+// module.exports = router
+export default router

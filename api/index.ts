@@ -1,10 +1,11 @@
-const express = require('express')
+import express from 'express'
 
 // Create express instnace
 const app = express()
 
 // Require API routes
-const hotels = require('./routes/hotels')
+
+import hotels from './routes/hotels'
 
 // Import API Routes
 app.use(hotels)

@@ -1,4 +1,6 @@
-module.exports = {
+import { Configuration } from '@nuxt/types'
+
+const nuxtConfig: Configuration = {
   mode: 'spa',
   /*
    ** Headers of the page
@@ -57,8 +59,13 @@ module.exports = {
      */
     extend(config, ctx) {}
   },
+  typescript: {
+    typeCheck: true,
+    ignoreNotFoundWarnings: true
+  },
   serverMiddleware: [
     // API middleware
-    '~/api/index.js'
+    '~/api/index.ts'
   ]
 }
+export default nuxtConfig
