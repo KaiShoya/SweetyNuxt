@@ -17,8 +17,9 @@
     "cross-env": "^6.0.3",
     "express": "^4.17.1",
     "mysql": "^2.17.1",
-    "nuxt": "^2.0.0",
-    "nuxt-buefy": "^0.3.2"
+    "nuxt": "^2.11.0",
+    "nuxt-buefy": "^0.3.2",
+    "ts-node": "^8.5.4"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.5.1",
