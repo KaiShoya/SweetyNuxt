@@ -13,7 +13,7 @@
         :phone="hotel.phone"
         :availability="hotel.availability"
         :updated_at_availability="hotel.updated_at_availability"
-        :credit="hotel.credit"
+        :credit="hotel.credit_card"
         :website="hotel.website"
       />
     </div>
