@@ -1,47 +1,38 @@
 import { Router } from 'express'
+import mysql from 'mysql'
+const connection = mysql.createConnection({
+  host: process.env.DATABASE_HOST,
+  user: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASS,
+  database: process.env.DATABASE_NAME,
+  port: Number(process.env.DATABASE_PORT || 3306)
+})
 
 const router = Router()
 
-const hotelsJson = [
-  {
-    id: 1,
-    name: 'Hotel Enjoy',
-    address: '宮崎県宮崎市××12-34',
-    phone: '0123-45-6789',
-    mapcode: '',
-    coordinate: [null, null],
-    credit: true,
-    availability: null
-  },
-  {
-    id: 2,
-    name: 'ホテル アレクサンドロス',
-    address: '宮崎県宮崎市〇〇9-99',
-    phone: '0987-65-4321',
-    mapcode: '',
-    coordinate: [null, null],
-    credit: false,
-    availability: null
-  }
-]
-
-/* GET users listing. */
-router.get('/hotels', function(req: any, res: any, next: any) {
-  res.json(hotelsJson)
+/* GET hotels listing. */
+router.get('/hotels', function(req, res, next) {
+  connection.query('SELECT * FROM hotels ORDER BY id', function(
+    err,
+    rows,
+    fields
+  ) {
+    if (err) throw err
+    res.json(rows)
+  })
 })
 
-/* GET user by ID. */
-router.get('/hotels/:id', function(req: any, res: any, next: any) {
+/* GET hotel by ID. */
+router.get('/hotels/:id', function(req, res, next) {
   const id = parseInt(req.params.id)
-  const hotel = hotelsJson.filter((x) => x.id == id)
-  if (hotel.length == 1) {
-    res.json(hotel[0])
-  } else if (hotel.length == 0) {
-    res.sendStatus(404)
-  } else {
-    res.sendStatus(500)
-  }
+  connection.query('SELECT * FROM hotels WHERE id = ? ORDER BY id', [id], function(
+    err,
+    rows,
+    fields
+  ) {
+    if (err) throw err
+    res.json(rows)
+  })
 })
 
-// module.exports = router
 export default router

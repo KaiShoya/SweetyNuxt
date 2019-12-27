@@ -1,4 +1,6 @@
 import { Configuration } from '@nuxt/types'
+import dotenv from 'dotenv'
+dotenv.config()
 
 const nuxtConfig: Configuration = {
   mode: 'spa',
