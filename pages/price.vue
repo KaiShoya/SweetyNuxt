@@ -64,11 +64,12 @@ export default {
     }
   },
   created () {
-    this.getHotels()
+    this.getHotels(this.cardAccepted)
   },
   methods: {
-    getHotels: function () {
-      this.$axios.$get('/api/hotels').then((res) => {
+    getHotels: function (credit) {
+      const url = credit ? '/api/hotels/credit' : '/api/hotels'
+      this.$axios.$get(url).then((res) => {
         this.hotels = res
         this.getPrices()
       })

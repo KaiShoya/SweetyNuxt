@@ -22,6 +22,17 @@ router.get('/hotels', function(req, res, next) {
   })
 })
 
+router.get('/hotels/credit', function(req, res, next) {
+  connection.query('SELECT * FROM hotels WHERE credit_card = true ORDER BY id', function(
+    err,
+    rows,
+    fields
+  ) {
+    if (err) throw err
+    res.json(rows)
+  })
+})
+
 /* GET hotel by ID. */
 router.get('/hotels/:id', function(req, res, next) {
   const id = parseInt(req.params.id)
