@@ -70,13 +70,28 @@ export default {
   },
   methods: {
     getHotels: function () {
-      const url = this.cardAccepted ? '/api/hotels?credit' : '/api/hotels'
-      this.$axios.$get(url).then((res) => {
+      const data = []
+      if (this.cardAccepted)
+        data.push('credit')
+
+      const availability = []
+      this.isAvailable.forEach((value, i) => {
+        if (value)
+          availability.push(i)
+      })
+      data.push(`availability=${JSON.stringify(availability)}`)
+
+      this.$axios.$get(`/api/hotels?${data.join('&')}`).then((res) => {
         this.hotels = res
         this.getPrices()
       })
     },
     getPrices: function () {
+      if (this.hotels.length <= 0) {
+        // hotelsが空だった時の処理
+        this.prices = []
+        return
+      }
       this.$axios.$get(`/api/prices?hotels=[${this.hotelIds}]`).then((res) => {
         this.prices = []
         res.forEach((value, i) => {
@@ -111,8 +126,11 @@ export default {
     }
   },
   watch: {
-    cardAccepted: function (val) {
-      this.getHotels(val)
+    cardAccepted: function () {
+      this.getHotels()
+    },
+    isAvailable: function () {
+      this.getHotels()
     }
   }
 }
