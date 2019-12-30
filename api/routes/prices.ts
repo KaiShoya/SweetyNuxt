@@ -22,8 +22,6 @@ router.get('/prices', function(req, res, next) {
           return {
             hotel_id: element.hotel_id,
             day_of_week: element.day_of_week,
-            availability: null,
-            updated_at_availability: null,
             utilization_time: element.utilization_time,
             time_zone_start: element.time_zone_start,
             time_zone_end: element.time_zone_end,

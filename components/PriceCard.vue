@@ -47,8 +47,7 @@ export default {
       type: String
     },
     availability: {
-      type: Number,
-      required: true
+      type: Number
     },
     updated_at_availability: {
       type: String

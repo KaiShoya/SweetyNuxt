@@ -81,8 +81,8 @@ export default {
           const hotel = this.getHotel(value.hotel_id)
           this.prices.push({
             dow: value.day_of_week,
-            availability: value.availability,
-            updated_at_availability: value.updated_at_availability,
+            availability: hotel.availability,
+            updated_at_availability: hotel.updated_at_availability,
             credit: Boolean(hotel.credit_card),
             hotel_name: hotel.name,
             utilization_time: value.utilization_time,

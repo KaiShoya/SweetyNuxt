@@ -12,7 +12,7 @@ const router = Router()
 
 /* GET hotels listing. */
 router.get('/hotels', function(req, res, next) {
-  connection.query('SELECT * FROM hotels ORDER BY id', function(
+  connection.query('SELECT h.*, a.availability, a.room_count, a.updated_at AS updated_at_availability FROM hotels h LEFT JOIN availability a ON h.id = a.hotel_id ORDER BY id', function(
     err,
     rows,
     fields
@@ -23,7 +23,7 @@ router.get('/hotels', function(req, res, next) {
 })
 
 router.get('/hotels/credit', function(req, res, next) {
-  connection.query('SELECT * FROM hotels WHERE credit_card = true ORDER BY id', function(
+  connection.query('SELECT h.*, a.availability, a.room_count, a.updated_at AS updated_at_availability FROM hotels h LEFT JOIN availability a ON h.id = a.hotel_id WHERE h.credit_card = true ORDER BY id', function(
     err,
     rows,
     fields
