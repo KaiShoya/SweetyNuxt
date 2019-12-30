@@ -31,6 +31,7 @@
 
 <script>
 import _ from 'lodash'
+import moment from 'moment'
 import priceform from '@/components/PriceForm'
 import card from '@/components/PriceCard'
 
@@ -64,6 +65,7 @@ export default {
     }
   },
   created () {
+    moment.locale( 'ja' )
     this.getHotels(this.cardAccepted)
   },
   methods: {
@@ -82,7 +84,7 @@ export default {
           this.prices.push({
             dow: value.day_of_week,
             availability: hotel.availability,
-            updated_at_availability: hotel.updated_at_availability,
+            updated_at_availability: (hotel.updated_at_availability == null) ? null : moment(new Date(hotel.updated_at_availability)).fromNow(),
             credit: Boolean(hotel.credit_card),
             hotel_name: hotel.name,
             utilization_time: value.utilization_time,
