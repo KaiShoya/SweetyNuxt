@@ -84,7 +84,7 @@ export default {
             dow: value.day_of_week,
             availability: value.availability,
             updated_at_availability: value.updated_at_availability,
-            credit: hotel.credit_card,
+            credit: Boolean(hotel.credit_card),
             hotel_name: hotel.name,
             utilization_time: value.utilization_time,
             time_zone_start: value.time_zone_start.slice(0, -3),
