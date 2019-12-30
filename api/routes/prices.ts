@@ -12,27 +12,28 @@ const router = Router()
 
 /* GET prices listing. */
 router.get('/prices', function(req, res, next) {
-  connection.query('SELECT * FROM price_lists ORDER BY id', function(
-    err,
-    rows,
-    fields
-  ) {
-    if (err) throw err
-
-    res.json(rows.map(function(element: any) {
-      return {
-        hotel_id: element.hotel_id,
-        day_of_week: element.day_of_week,
-        availability: null,
-        updated_at_availability: null,
-        utilization_time: element.utilization_time,
-        time_zone_start: element.time_zone_start,
-        time_zone_end: element.time_zone_end,
-        min_price: element.min_price,
-        max_price: element.max_price
-      }
-    }))
-  })
+  connection.query(
+    'SELECT * FROM price_lists WHERE hotel_id IN (?) ORDER BY id',
+    [JSON.parse(req.query.hotels)],
+    function(err, rows, fields) {
+      if (err) throw err
+      res.json(
+        rows.map(function(element: any) {
+          return {
+            hotel_id: element.hotel_id,
+            day_of_week: element.day_of_week,
+            availability: null,
+            updated_at_availability: null,
+            utilization_time: element.utilization_time,
+            time_zone_start: element.time_zone_start,
+            time_zone_end: element.time_zone_end,
+            min_price: element.min_price,
+            max_price: element.max_price
+          }
+        })
+      )
+    }
+  )
 })
 
 export default router

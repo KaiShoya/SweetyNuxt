@@ -75,7 +75,7 @@ export default {
       })
     },
     getPrices: function () {
-      this.$axios.$get('/api/prices').then((res) => {
+      this.$axios.$get(`/api/prices?hotels=[${this.hotelIds}]`).then((res) => {
         res.forEach((value, i) => {
           const hotel = this.getHotel(value.hotel_id)
           this.prices.push({
@@ -97,6 +97,16 @@ export default {
       return this.hotels.filter((element) => {
         return (element.id == id)
       })[0]
+    }
+  },
+  computed: {
+    hotelIds: function () {
+      return this.hotels.map((element) => { return element.id })
+    }
+  },
+  watch: {
+    cardAccepted: function (val) {
+      this.getHotels(val)
     }
   }
 }
