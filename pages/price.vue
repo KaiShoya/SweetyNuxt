@@ -65,12 +65,12 @@ export default {
     }
   },
   created () {
-    this.getHotels(this.cardAccepted)
     moment.locale('ja')
+    this.getHotels()
   },
   methods: {
-    getHotels: function (credit) {
-      const url = credit ? '/api/hotels/credit' : '/api/hotels'
+    getHotels: function () {
+      const url = this.cardAccepted ? '/api/hotels?credit' : '/api/hotels'
       this.$axios.$get(url).then((res) => {
         this.hotels = res
         this.getPrices()
