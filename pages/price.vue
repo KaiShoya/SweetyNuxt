@@ -65,8 +65,8 @@ export default {
     }
   },
   created () {
-    moment.locale( 'ja' )
     this.getHotels(this.cardAccepted)
+    moment.locale('ja')
   },
   methods: {
     getHotels: function (credit) {
