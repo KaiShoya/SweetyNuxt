@@ -76,10 +76,8 @@ export default {
     },
     getPrices: function () {
       this.$axios.$get('/api/prices').then((res) => {
-        console.log(res)
         res.forEach((value, i) => {
           const hotel = this.getHotel(value.hotel_id)
-          console.log(hotel)
           this.prices.push({
             dow: value.day_of_week,
             availability: value.availability,
@@ -96,7 +94,7 @@ export default {
       })
     },
     getHotel: function (id) {
-      return this.hotels.filter(function (element, index, array) {
+      return this.hotels.filter((element) => {
         return (element.id == id)
       })[0]
     }
