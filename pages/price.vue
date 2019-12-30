@@ -11,7 +11,7 @@
       v-bind:cardAccepted.sync="cardAccepted"
     />
 
-    <div class="box" v-for="price in prices">
+    <div class="box" v-for="price in orderedPrices">
       <card
         :dow="price.dow"
         :day_of_week="price.day_of_week"
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import priceform from '@/components/PriceForm'
 import card from '@/components/PriceCard'
 
@@ -46,7 +47,6 @@ export default {
       utilizationTime: null,
       isAvailable: [true, true, false],
       cardAccepted: false,
-      sortKey: 'price',
       day_of_week: [
         { id: 0, name: '全曜日' },
         { id: 1, name: '月' },
@@ -76,6 +76,7 @@ export default {
     },
     getPrices: function () {
       this.$axios.$get(`/api/prices?hotels=[${this.hotelIds}]`).then((res) => {
+        this.prices = []
         res.forEach((value, i) => {
           const hotel = this.getHotel(value.hotel_id)
           this.prices.push({
@@ -100,6 +101,9 @@ export default {
     }
   },
   computed: {
+    orderedPrices: function () {
+      return _.orderBy(this.prices, ['min_price'], ['asc'])
+    },
     hotelIds: function () {
       return this.hotels.map((element) => { return element.id })
     }
