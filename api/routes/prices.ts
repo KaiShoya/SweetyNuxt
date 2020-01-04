@@ -19,7 +19,7 @@ router.get('/prices', function(req, res, next) {
   data.push(JSON.parse(req.query.hotels))
 
   // 曜日
-  if(req.query.dow != 0) {
+  if(req.query.dow != null && Number(req.query.dow) != 0) {
     where.push('day_of_week = ?')
     data.push(req.query.dow)
   }
