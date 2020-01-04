@@ -50,7 +50,6 @@ router.get('/hotels', function(req, res, next) {
     ` WHERE ${where.join(' AND ')}` +
     ' ORDER BY id'
 
-  // res.send(sql)
   connection.query(sql, data, function(err, rows, fields) {
     if (err) throw err
     res.json(rows)
@@ -60,14 +59,14 @@ router.get('/hotels', function(req, res, next) {
 /* GET hotel by ID. */
 router.get('/hotels/:id', function(req, res, next) {
   const id = parseInt(req.params.id)
-  connection.query('SELECT * FROM hotels WHERE id = ? ORDER BY id', [id], function(
-    err,
-    rows,
-    fields
-  ) {
-    if (err) throw err
-    res.json(rows)
-  })
+  connection.query(
+    'SELECT * FROM hotels WHERE id = ? ORDER BY id',
+    [id],
+    function(err, rows, fields) {
+      if (err) throw err
+      res.json(rows)
+    }
+  )
 })
 
 export default router
