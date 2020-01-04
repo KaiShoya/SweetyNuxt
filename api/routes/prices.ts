@@ -12,9 +12,15 @@ const router = Router()
 
 /* GET prices listing. */
 router.get('/prices', function(req, res, next) {
+  const where = []
+  const data = []
+
+  where.push('hotel_id IN (?)')
+  data.push(JSON.parse(req.query.hotels))
+
   connection.query(
-    'SELECT * FROM price_lists WHERE hotel_id IN (?) ORDER BY id',
-    [JSON.parse(req.query.hotels)],
+    `SELECT * FROM price_lists WHERE ${where.join(' AND ')} ORDER BY id`,
+    data,
     function(err, rows, fields) {
       if (err) throw err
       res.json(
