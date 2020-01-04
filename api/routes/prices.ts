@@ -18,6 +18,12 @@ router.get('/prices', function(req, res, next) {
   where.push('hotel_id IN (?)')
   data.push(JSON.parse(req.query.hotels))
 
+  // 曜日
+  if(req.query.dow != 0) {
+    where.push('day_of_week = ?')
+    data.push(req.query.dow)
+  }
+
   connection.query(
     `SELECT * FROM price_lists WHERE ${where.join(' AND ')} ORDER BY id`,
     data,

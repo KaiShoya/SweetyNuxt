@@ -42,7 +42,7 @@ export default {
   },
   data () {
     return {
-      dowId: 0,
+      dowId: 1,
       startHour: '0',
       startTime: '00',
       utilizationTime: null,
@@ -65,6 +65,12 @@ export default {
     }
   },
   created () {
+    const today = new Date()
+    let dow = today.getDay()
+    // 日曜日の番号を入れ替える 0->7
+    if (dow == 0) dow = 7
+    this.dowId = dow
+
     moment.locale('ja')
     this.getHotels()
   },
@@ -92,7 +98,7 @@ export default {
         this.prices = []
         return
       }
-      this.$axios.$get(`/api/prices?hotels=[${this.hotelIds}]`).then((res) => {
+      this.$axios.$get(`/api/prices?hotels=[${this.hotelIds}]&dow=${this.dowId}`).then((res) => {
         this.prices = []
         res.forEach((value, i) => {
           const hotel = this.getHotel(value.hotel_id)
@@ -126,6 +132,9 @@ export default {
     }
   },
   watch: {
+    dowId: function () {
+      this.getPrices()
+    },
     cardAccepted: function () {
       this.getHotels()
     },
