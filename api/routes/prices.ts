@@ -27,13 +27,13 @@ router.get('/prices', function(req, res, next) {
   // 利用開始時間
   const startHour = req.query.startHour || '0'
   const startTime = req.query.startTime || '00'
+  const hourTime = `${startHour}:${startTime}:00`
   if (
     startHour != '0' &&
     startHour != '00' &&
     startTime != '0' &&
     startTime != '00'
   ) {
-    const hourTime = `${startHour}:${startTime}:00`
     // 0:00じゃない場合
     where.push('time_zone_start <= ?')
     data.push(hourTime)
@@ -41,6 +41,23 @@ router.get('/prices', function(req, res, next) {
       '((from_checkin = false AND time_zone_end >= ?) OR (from_checkin = true AND time_zone_end >= ?))'
     )
     data.push(hourTime)
+    data.push(hourTime)
+  }
+
+  // 利用時間
+  const utilizationTime = req.query.utilizationTime
+  if (utilizationTime == null || utilizationTime == '') {
+    // 何もしない
+  } else if (utilizationTime == 'Free' || utilizationTime == 'Lodging') {
+    where.push('utilization_time = ?')
+    data.push(utilizationTime)
+  } else {
+    where.push(
+      '(CAST(utilization_time AS SIGNED) >= CAST(? AS SIGNED) ' +
+        'OR (utilization_time IN ("Free", "Lodging") AND (time_zone_end - INTERVAL ? MINUTE) >= ?))'
+    )
+    data.push(utilizationTime)
+    data.push(utilizationTime)
     data.push(hourTime)
   }
 

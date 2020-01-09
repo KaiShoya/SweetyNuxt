@@ -45,7 +45,7 @@ export default {
       dowId: 1,
       startHour: '0',
       startTime: '00',
-      utilizationTime: null,
+      utilizationTime: '',
       isAvailable: [true, true, false],
       cardAccepted: false,
       day_of_week: [
@@ -98,7 +98,9 @@ export default {
         this.prices = []
         return
       }
-      this.$axios.$get(`/api/prices?hotels=[${this.hotelIds}]&dow=${this.dowId}&startHour=${this.startHour}&startTime=${this.startTime}`).then((res) => {
+      this.$axios.$get(
+        `/api/prices?hotels=[${this.hotelIds}]&dow=${this.dowId}&startHour=${this.startHour}&startTime=${this.startTime}&utilizationTime=${this.utilizationTime}`
+      ).then((res) => {
         this.prices = []
         res.forEach((value, i) => {
           const hotel = this.getHotel(value.hotel_id)
@@ -139,6 +141,9 @@ export default {
       this.getPrices()
     },
     startTime: function () {
+      this.getPrices()
+    },
+    utilizationTime: function () {
       this.getPrices()
     },
     cardAccepted: function () {
