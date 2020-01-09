@@ -98,7 +98,7 @@ export default {
         this.prices = []
         return
       }
-      this.$axios.$get(`/api/prices?hotels=[${this.hotelIds}]&dow=${this.dowId}`).then((res) => {
+      this.$axios.$get(`/api/prices?hotels=[${this.hotelIds}]&dow=${this.dowId}&startHour=${this.startHour}&startTime=${this.startTime}`).then((res) => {
         this.prices = []
         res.forEach((value, i) => {
           const hotel = this.getHotel(value.hotel_id)
@@ -133,6 +133,12 @@ export default {
   },
   watch: {
     dowId: function () {
+      this.getPrices()
+    },
+    startHour: function () {
+      this.getPrices()
+    },
+    startTime: function () {
       this.getPrices()
     },
     cardAccepted: function () {

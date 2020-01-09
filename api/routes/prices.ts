@@ -19,9 +19,27 @@ router.get('/prices', function(req, res, next) {
   data.push(JSON.parse(req.query.hotels))
 
   // 曜日
-  if(req.query.dow != null && Number(req.query.dow) != 0) {
+  if (req.query.dow != null && Number(req.query.dow) != 0) {
     where.push('day_of_week = ?')
     data.push(req.query.dow)
+  }
+
+  // 利用開始時間
+  const startHour = req.query.startHour || '0'
+  const startTime = req.query.startTime || '00'
+  if (
+    (startHour != '0' || startHour != '00') &&
+    (startTime != '0' || startTime != '00')
+  ) {
+    const hourTime = `${startHour}:${startTime}:00`
+    // 0:00じゃない場合
+    where.push('time_zone_start <= ?')
+    data.push(hourTime)
+    where.push(
+      '((from_checkin = false AND time_zone_end >= ?) OR (from_checkin = true AND time_zone_end >= ?))'
+    )
+    data.push(hourTime)
+    data.push(hourTime)
   }
 
   connection.query(
