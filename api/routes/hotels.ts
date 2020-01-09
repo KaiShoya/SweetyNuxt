@@ -1,5 +1,7 @@
 import { Router } from 'express'
 import mysql from 'mysql'
+import moment from 'moment'
+
 const connection = mysql.createConnection({
   host: process.env.DATABASE_HOST,
   user: process.env.DATABASE_USER,
@@ -50,9 +52,29 @@ router.get('/hotels', function(req, res, next) {
     ` WHERE ${where.join(' AND ')}` +
     ' ORDER BY id'
 
+  moment.locale('ja')
   connection.query(sql, data, function(err, rows, fields) {
     if (err) throw err
-    res.json(rows)
+    res.json(
+      rows.map(function(element: any) {
+        return {
+          id: element.id,
+          name: element.name,
+          address: element.address,
+          phone: element.phone,
+          mapcode: element.mapcode,
+          lat: element.lat,
+          lon: element.lon,
+          credit_card: element.credit_card,
+          deleted: element.deleted,
+          created_at: element.created_at,
+          updated_at: element.updated_at,
+          availability: element.availability,
+          room_count: element.room_count,
+          updated_at_availability: (element.updated_at_availability == null) ? null : moment(new Date(element.updated_at_availability)).fromNow()
+        }
+      })
+    )
   })
 })
 
