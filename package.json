@@ -6,10 +6,9 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon server/index.ts --watch server",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "starta": "cross-env NODE_ENV=production ts-node server/index.ts",
-    "generate": "nuxt generate",
+    "build": "nuxt-ts build",
+    "start": "cross-env NODE_ENV=production HOST=0.0.0.0 nuxt-ts start",
+    "generate": "nuxt-ts generate",
     "test": "jest"
   },
   "dependencies": {
