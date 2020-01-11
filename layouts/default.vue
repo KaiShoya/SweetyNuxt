@@ -3,8 +3,8 @@
     <nav class="navbar is-dark">
       <div class="navbar-brand">
         <div class="navbar-item">Sweety</div>
-        <nuxt-link class="navbar-item" to="price" exact-active-class="is-active">価格検索</nuxt-link>
-        <nuxt-link class="navbar-item" to="hotel" exact-active-class="is-active">ホテル一覧</nuxt-link>
+        <nuxt-link class="navbar-item" to="/" exact-active-class="is-active">価格検索</nuxt-link>
+        <nuxt-link class="navbar-item" to="/hotel" exact-active-class="is-active">ホテル一覧</nuxt-link>
 
         <a
           role="button"
@@ -21,7 +21,7 @@
 
       <div class="navbar-menu" id="navMenu">
         <div class="navbar-start">
-          <nuxt-link class="navbar-item" to="tos" exact-active-class="is-active">利用規約</nuxt-link>
+          <nuxt-link class="navbar-item" to="/tos" exact-active-class="is-active">利用規約</nuxt-link>
           <!-- <nuxt-link class="navbar-item" to="availability" exact-active-class="is-active">空室状況</nuxt-link> -->
         </div>
         <div class="navbar-end">
