@@ -6,8 +6,8 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon server/index.ts --watch server",
-    "build": "nuxt-ts build",
-    "start": "cross-env NODE_ENV=production HOST=0.0.0.0 nuxt-ts start",
+    "build": "babel api --extensions '.ts' -d api-dist && nuxt build",
+    "start": "cross-env NODE_ENV=production HOST=0.0.0.0 node server/index.js",
     "generate": "nuxt-ts generate",
     "test": "jest"
   },
@@ -26,6 +26,10 @@
     "ts-node": "^8.5.4"
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-typescript": "^7.8.3",
     "@nuxt/typescript-build": "^0.5.3",
     "@vue/test-utils": "^1.0.0-beta.27",
     "babel-jest": "^24.1.0",
@@ -36,6 +40,7 @@
     "nodemon": "^2.0.2",
     "prettier": "^1.16.4",
     "sass-loader": "^8.0.0",
+    "typescript": "^3.7.4",
     "vue-jest": "^4.0.0-0"
   }
 }
