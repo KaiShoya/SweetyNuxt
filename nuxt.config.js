@@ -70,8 +70,5 @@ module.exports = {
   serverMiddleware: [
     // API middleware
     '~/api-dist/index.js'
-  ],
-  env: {
-    baseUrl: process.env.BASEURL || 'http://localhost:3000'
-  }
+  ]
 }
