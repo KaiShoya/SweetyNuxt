@@ -5,7 +5,7 @@
   "author": "Kai Shoya",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon server/index.ts --watch server",
+    "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
     "build": "babel api --extensions '.ts' -d api-dist && nuxt build",
     "start": "cross-env NODE_ENV=production HOST=0.0.0.0 node server/index.js",
     "generate": "nuxt-ts generate",
