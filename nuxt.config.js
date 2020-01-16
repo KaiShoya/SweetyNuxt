@@ -26,7 +26,6 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/axios.js'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -68,8 +67,5 @@ module.exports = {
   serverMiddleware: [
     // API middleware
     '~/api-dist/index.js'
-  ],
-  env: {
-    baseUrl: process.env.BASEURL || 'http://localhost:3000'
-  }
+  ]
 }
