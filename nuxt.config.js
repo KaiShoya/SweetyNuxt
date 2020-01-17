@@ -33,6 +33,9 @@ module.exports = {
   ** Nuxt.js dev-modules
   */
   buildModules: [
+    ['@nuxtjs/google-analytics', {
+      id: 'UA-156433872-1'
+    }]
   ],
   /*
   ** Nuxt.js modules
@@ -73,5 +76,9 @@ module.exports = {
   serverMiddleware: [
     // API middleware
     '~/api-dist/index.js'
-  ]
+  ],
+  debug: {
+    enabled: true,
+    sendHitTask: true
+  }
 }
