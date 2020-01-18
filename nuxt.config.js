@@ -50,7 +50,8 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    '@nuxtjs/sitemap'
   ],
   /*
    ** Axios module configuration
@@ -58,6 +59,20 @@ module.exports = {
    */
   axios: {
     proxy: true
+  },
+  sitemap: {
+    path: '/sitemap.xml',
+    hostname: process.env.API_URL,
+    exclude: ['/api/**'],
+    cacheTime: 1000 * 60 * 60 * 24,
+    routes() {
+      const pageList = [
+        `/${process.env.API_URL}`,
+        `/${process.env.API_URL}/hotel`,
+        `/${process.env.API_URL}/tos`
+      ]
+      return pageList
+    }
   },
   proxy: {
     '/api/': process.env.API_URL || 'http://localhost:3000/'
