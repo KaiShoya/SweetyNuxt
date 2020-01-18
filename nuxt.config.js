@@ -76,9 +76,5 @@ module.exports = {
   serverMiddleware: [
     // API middleware
     '~/api-dist/index.js'
-  ],
-  debug: {
-    enabled: true,
-    sendHitTask: true
-  }
+  ]
 }
