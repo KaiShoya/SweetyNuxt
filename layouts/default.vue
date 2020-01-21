@@ -23,18 +23,31 @@
       <div v-bind:class="[{ 'is-active': active }, 'navbar-menu']" id="navMenu">
         <div class="navbar-start">
           <nuxt-link class="navbar-item" to="/tos" exact-active-class="is-active">利用規約</nuxt-link>
-          <!-- <nuxt-link class="navbar-item" to="availability" exact-active-class="is-active">空室状況</nuxt-link> -->
         </div>
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="field is-grouped">
               <p class="control">
-                <!-- <div class="navbar-item">
-                  <span></span>
-                </div> -->
-                <a class="button is-primary" href="">
-                  <span>ログイン</span>
-                </a>
+                <b-button
+                  class="navbar-item"
+                  :type="active ? 'is-text' : 'is-dark'"
+                  size="is-midium"
+                  icon-left="email"
+                  tag="a"
+                  href="https://github.com/KaiShoya/SweetyNuxt/issues"
+                  target="_blank"
+                ></b-button>
+              </p>
+              <p class="control">
+                <b-button
+                  class="navbar-item"
+                  :type="active ? 'is-text' : 'is-dark'"
+                  size="is-midium"
+                  icon-left="github-circle"
+                  tag="a"
+                  href="https://github.com/KaiShoya/SweetyNuxt"
+                  target="_blank"
+                ></b-button>
               </p>
             </div>
           </div>
