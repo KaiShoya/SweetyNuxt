@@ -12,6 +12,7 @@
           aria-label="menu"
           aria-expanded="false"
           data-target="navMenu"
+          v-on:click="active = !active"
         >
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -19,7 +20,7 @@
         </a>
       </div>
 
-      <div class="navbar-menu" id="navMenu">
+      <div v-bind:class="[{ 'is-active': active }, 'navbar-menu']" id="navMenu">
         <div class="navbar-start">
           <nuxt-link class="navbar-item" to="/tos" exact-active-class="is-active">利用規約</nuxt-link>
           <!-- <nuxt-link class="navbar-item" to="availability" exact-active-class="is-active">空室状況</nuxt-link> -->
@@ -50,16 +51,11 @@
 </template>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-  if ($navbarBurgers.length > 0) {
-    $navbarBurgers.forEach(el => {
-      el.addEventListener('click', () => {
-        const target = document.getElementById(el.dataset.target);
-        el.classList.toggle('is-active');
-        target.classList.toggle('is-active');
-      });
-    });
+export default {
+  data () {
+    return {
+      active: false
+    }
   }
-});
+}
 </script>
