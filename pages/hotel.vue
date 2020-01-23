@@ -13,7 +13,7 @@
       <span class="tag is-danger">なし</span>
       <span class="tag is-warning">不明</span>
     </div>
-    <b-tabs v-model="activeTab">
+    <b-tabs v-model="activeTab" destroyOnHide="true">
       <b-tab-item :label="area.name" v-for="area in detailAreas" v-bind:key="area.id">
         <div class="box" v-for="hotel in hotels[area.id]">
           <card
