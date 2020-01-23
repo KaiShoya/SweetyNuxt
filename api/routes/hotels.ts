@@ -84,7 +84,10 @@ router.get('/hotels', function(req, res, next) {
           updated_at: element.updated_at,
           availability: element.availability,
           room_count: element.room_count,
-          updated_at_availability: (element.updated_at_availability == null) ? null : moment(new Date(element.updated_at_availability)).fromNow()
+          updated_at_availability:
+            element.updated_at_availability == null
+              ? null
+              : moment(new Date(element.updated_at_availability)).fromNow()
         }
       })
     )
