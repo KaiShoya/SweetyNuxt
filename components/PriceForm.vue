@@ -221,8 +221,8 @@ export default {
           this.changeStartTime('00')
         }
       } else if (condition == null) {
-          this.changeStartHour('0')
-          this.changeStartTime('00')
+        this.changeStartHour('0')
+        this.changeStartTime('00')
       }
     },
     changeUtilizationTime: function (value) {
