@@ -2,6 +2,18 @@
   <div id="form">
     <nav class="level">
       <div class="level-left">
+        <div class="level-item">利用する地域</div>
+        <div class="level-item">
+          <button
+            v-for="area in areasList"
+            v-bind:class="[areaSelected == area.id ? 'is-primary' : '', 'button']"
+            v-on:click="changeArea(area.id)"
+          >{{ area.name }}</button>
+        </div>
+      </div>
+    </nav>
+    <nav class="level">
+      <div class="level-left">
         <div class="level-item">利用する曜日</div>
         <div class="level-item">
           <button
@@ -189,6 +201,14 @@ export default {
     cardAccepted: {
       type: Boolean,
       required: true
+    },
+    areaSelected: {
+      type: Number,
+      required: true
+    },
+    areasList: {
+      type: Array,
+      required: true
     }
   },
   methods: {
@@ -233,6 +253,9 @@ export default {
     },
     changeCardAccepted: function (value) {
       this.$emit('update:cardAccepted', value)
+    },
+    changeArea: function (value) {
+      this.$emit('update:areaSelected', value)
     }
   }
 }
