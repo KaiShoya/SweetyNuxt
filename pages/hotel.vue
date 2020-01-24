@@ -1,12 +1,12 @@
 <template>
   <section class="section">
-    <div>
+    <!-- <div>
       <button
         v-for="area in areasList"
         v-bind:class="[areaSelected == area.id ? 'is-primary' : '', 'button']"
         v-on:click="changeArea(area.id)"
       >{{ area.name }}</button>
-    </div>
+    </div> -->
     <div>
       空き状況：
       <span class="tag is-success">あり</span>

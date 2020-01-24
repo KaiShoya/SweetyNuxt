@@ -1,6 +1,6 @@
 <template>
   <div id="form">
-    <nav class="level">
+    <!-- <nav class="level">
       <div class="level-left">
         <div class="level-item">利用する地域</div>
         <div class="level-item">
@@ -11,7 +11,7 @@
           >{{ area.name }}</button>
         </div>
       </div>
-    </nav>
+    </nav> -->
     <nav class="level">
       <div class="level-left">
         <div class="level-item">利用する曜日</div>
