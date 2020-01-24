@@ -57,14 +57,13 @@ export default {
     updateDatas: function () {
       this.hotels = []
       this.detailAreas = []
-      this.getDetailAreas(this.areaSelected).then((detailAreas) => {
+      this.getDetailAreas(this.areaSelected).then(async (detailAreas) => {
         this.detailAreas = detailAreas
         this.detailAreas.unshift({ id: 0, area_id: this.areaSelected, name: '全て' })
-        detailAreas.forEach((value, i) => {
-          this.getHotels(value.id).then((hotels) => {
-            this.hotels.push(hotels)
-          })
-        })
+        for (let detailArea of detailAreas) {
+          const hotels = await this.getHotels(detailArea.id)
+          this.hotels.push(hotels)
+        }
       })
     },
     async getDetailAreas (detailAreaId) {
