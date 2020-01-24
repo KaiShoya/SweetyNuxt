@@ -45,10 +45,23 @@ router.get('/hotels', function(req, res, next) {
     data.push(availability)
   }
 
+  const areaId = Number(req.query.area) || 0
+  if (areaId != 0) {
+    where.push('ha.area_id = ?')
+    data.push(areaId)
+  }
+
+  const detailAreaId = Number(req.query.detail_area) || 0
+  if (detailAreaId != 0) {
+    where.push('ha.detail_area_id = ?')
+    data.push(detailAreaId)
+  }
+
   const sql =
     'SELECT h.*, IFNULL(a.availability, 0) AS availability, a.room_count, a.updated_at AS updated_at_availability' +
     ' FROM hotels h' +
     ' LEFT JOIN availability a ON h.id = a.hotel_id' +
+    ' LEFT JOIN (SELECT detail_area_id,area_id,hotel_id FROM hotel_areas ha LEFT JOIN detail_area_master dam ON ha.detail_area_id = dam.id) ha ON h.id = ha.hotel_id' +
     ` WHERE ${where.join(' AND ')}` +
     ' ORDER BY id'
 
@@ -71,7 +84,10 @@ router.get('/hotels', function(req, res, next) {
           updated_at: element.updated_at,
           availability: element.availability,
           room_count: element.room_count,
-          updated_at_availability: (element.updated_at_availability == null) ? null : moment(new Date(element.updated_at_availability)).fromNow()
+          updated_at_availability:
+            element.updated_at_availability == null
+              ? null
+              : moment(new Date(element.updated_at_availability)).fromNow()
         }
       })
     )
