@@ -16,7 +16,7 @@
 
     <b-tabs v-model="activeTab">
       <b-tab-item :label="area.name" v-for="area in detailAreas" v-bind:key="area.id">
-        <div class="box" v-for="price in prices[area.id]">
+        <div class="box" v-for="price in changeDisplayedResults(area.id)">
           <card
             :dow="price.dow"
             :day_of_week="price.day_of_week"
@@ -157,6 +157,16 @@ export default {
           max_price: value.max_price
         }
       }, this), ['min_price'], ['asc'])
+    },
+    changeDisplayedResults: function (areaId) {
+      const prices = this.prices[areaId]
+      if (this.displayedResults == 'all') {
+        return prices
+      } else if (!Array.isArray(prices) || prices.length <= 0) {
+        return []
+      } else {
+        return prices.slice(0, Number(this.displayedResults))
+      }
     },
     getHotel: function (areaId, id) {
       return this.hotels[areaId].filter((element) => {
