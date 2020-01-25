@@ -11,6 +11,7 @@
       v-bind:cardAccepted.sync="cardAccepted"
       v-bind:areaSelected.sync="areaSelected"
       v-bind:areasList="areasList"
+      v-bind:displayedResults.sync="displayedResults"
     />
 
     <b-tabs v-model="activeTab">
@@ -70,7 +71,8 @@ export default {
       activeTab: 0,
       areasList: [],
       areaSelected: 1,
-      detailAreas: []
+      detailAreas: [],
+      displayedResults: '30'
     }
   },
   created () {
