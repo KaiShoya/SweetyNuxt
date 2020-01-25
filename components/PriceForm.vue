@@ -156,15 +156,35 @@
       </div>
     </nav>
 
-    <label class="checkbox">
-      <input
-        type="checkbox"
-        id="card_accepted"
-        v-bind:checked="cardAccepted"
-        v-on:change="changeCardAccepted(!cardAccepted)"
-      />
-      クレジットカード可
-    </label>
+    <nav class="level">
+      <div class="level-left">
+        <label class="checkbox">
+          <input
+            type="checkbox"
+            id="card_accepted"
+            v-bind:checked="cardAccepted"
+            v-on:change="changeCardAccepted(!cardAccepted)"
+          />
+          クレジットカード可
+        </label>
+      </div>
+      <div class="level-right">
+        <div class="level-item">
+          <button
+            v-bind:class="[displayedResults == '30' ? 'is-primary' : '', 'button']"
+            v-on:click="clickDisplayedResults('30')"
+          >30件</button>
+          <button
+            v-bind:class="[displayedResults == '50' ? 'is-primary' : '', 'button']"
+            v-on:click="clickDisplayedResults('50')"
+          >50件</button>
+          <button
+            v-bind:class="[displayedResults == 'all' ? 'is-primary' : '', 'button']"
+            v-on:click="clickDisplayedResults('all')"
+          >全件</button>
+        </div>
+      </div>
+    </nav>
   </div>
 </template>
 
@@ -208,6 +228,10 @@ export default {
     },
     areasList: {
       type: Array,
+      required: true
+    },
+    displayedResults: {
+      type: String,
       required: true
     }
   },
@@ -256,6 +280,9 @@ export default {
     },
     changeArea: function (value) {
       this.$emit('update:areaSelected', value)
+    },
+    clickDisplayedResults: function (value) {
+      this.$emit('update:displayedResults', value)
     }
   }
 }
