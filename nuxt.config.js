@@ -50,8 +50,7 @@ module.exports = {
       'nuxt-buefy',
       {
         css: false,
-        materialDesignIcons: false,
-        materialDesignIconsHRef: '/'
+        materialDesignIcons: false
       }
     ],
     // Doc: https://axios.nuxtjs.org/usage
