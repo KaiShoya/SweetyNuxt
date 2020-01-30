@@ -25,7 +25,7 @@ module.exports = {
   /*
    ** Global CSS
    */
-  css: ['~/assets/style.scss'],
+  css: ['@mdi/font/css/materialdesignicons.min.css', '~/assets/style.scss'],
   /*
    ** Plugins to load before mounting the App
    */
@@ -46,7 +46,14 @@ module.exports = {
    */
   modules: [
     // Doc: https://buefy.github.io/#/documentation
-    ['nuxt-buefy', { css: false }],
+    [
+      'nuxt-buefy',
+      {
+        css: false,
+        materialDesignIcons: false,
+        materialDesignIconsHRef: '/'
+      }
+    ],
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     // Doc: https://github.com/nuxt-community/dotenv-module
