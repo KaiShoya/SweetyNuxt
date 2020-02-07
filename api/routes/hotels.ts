@@ -14,7 +14,7 @@ const router = Router()
 
 /* GET hotels listing. */
 router.get('/hotels', function(req, res, next) {
-  const where = []
+  const where = ['deleted = false']
   const data = []
   // クレジットカード
   if (req.query.credit != null) {
@@ -79,7 +79,6 @@ router.get('/hotels', function(req, res, next) {
           lat: element.lat,
           lon: element.lon,
           credit_card: element.credit_card,
-          deleted: element.deleted,
           created_at: element.created_at,
           updated_at: element.updated_at,
           availability: element.availability,
