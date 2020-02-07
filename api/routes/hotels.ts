@@ -47,7 +47,13 @@ router.get('/hotels', function(req, res, next) {
 
   const areaId = Number(req.query.area) || 0
   if (areaId != 0) {
-    where.push('ha.area_id = ?')
+    // FIXME: ホテルの一部が表示されないバグ対応
+    // 今は宮崎市のデータしかないためこれで回避可能
+    if (areaId == 1) {
+      where.push('(ha.area_id IS NULL OR ha.area_id = ?)')
+    } else {
+      where.push('ha.area_id = ?')
+    }
     data.push(areaId)
   }
 
