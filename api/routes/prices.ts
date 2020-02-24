@@ -29,10 +29,10 @@ router.get('/prices', function(req, res, next) {
   const startTime = req.query.startTime || '00'
   const hourTime = `${startHour}:${startTime}:00`
   if (
-    startHour != '0' &&
-    startHour != '00' &&
-    startTime != '0' &&
-    startTime != '00'
+    !(
+      (startHour === '0' || startHour === '00') &&
+      (startTime === '0' || startTime === '00')
+    )
   ) {
     // 0:00じゃない場合
     where.push('time_zone_start <= ?')
