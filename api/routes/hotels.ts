@@ -1,19 +1,12 @@
 import { Request } from 'express'
-import mysql from 'mysql'
+import context from '../connection'
 import moment from 'moment'
-
-const connection = mysql.createConnection({
-  host: process.env.DATABASE_HOST,
-  user: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASS,
-  database: process.env.DATABASE_NAME,
-  port: Number(process.env.DATABASE_PORT || 3306)
-})
 
 const router = function() {}
 
 /* GET hotels listing. */
 router.hotels = function(req: Request, res: any, next: any) {
+  const connection = context()
   const where = ['deleted = false']
   const data = []
   // クレジットカード
@@ -97,10 +90,12 @@ router.hotels = function(req: Request, res: any, next: any) {
       })
     )
   })
+  connection.end()
 }
 
 /* GET hotel by ID. */
 router.hotelsId = function(req: Request, res: any, next: any) {
+  const connection = context()
   const id = parseInt(req.params.id)
   connection.query(
     'SELECT * FROM hotels WHERE id = ? ORDER BY id',
@@ -110,6 +105,7 @@ router.hotelsId = function(req: Request, res: any, next: any) {
       res.json(rows)
     }
   )
+  connection.end()
 }
 
 export default router

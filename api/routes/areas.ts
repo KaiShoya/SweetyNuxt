@@ -1,17 +1,10 @@
 import { Request } from 'express'
-import mysql from 'mysql'
-
-const connection = mysql.createConnection({
-  host: process.env.DATABASE_HOST,
-  user: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASS,
-  database: process.env.DATABASE_NAME,
-  port: Number(process.env.DATABASE_PORT || 3306)
-})
+import context from '../connection'
 
 const router = function() {}
 
 router.areas = function(req: Request, res: any, next: any) {
+  const connection = context()
   connection.query(
     'SELECT * FROM area_master',
     function(err, rows, fields) {
@@ -19,9 +12,11 @@ router.areas = function(req: Request, res: any, next: any) {
       res.json(rows)
     }
   )
+  connection.end()
 }
 
 router.area = function(req: Request, res: any, next: any) {
+  const connection = context()
   const areaId = Number(req.query.id) || 1
   connection.query(
     'SELECT * FROM detail_area_master WHERE area_id = ?',
@@ -31,6 +26,7 @@ router.area = function(req: Request, res: any, next: any) {
       res.json(rows)
     }
   )
+  connection.end()
 }
 
 export default router
