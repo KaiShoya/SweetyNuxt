@@ -1,5 +1,6 @@
-import { Router } from 'express'
+import { Request } from 'express'
 import mysql from 'mysql'
+
 const connection = mysql.createConnection({
   host: process.env.DATABASE_HOST,
   user: process.env.DATABASE_USER,
@@ -8,10 +9,10 @@ const connection = mysql.createConnection({
   port: Number(process.env.DATABASE_PORT || 3306)
 })
 
-const router = Router()
+const router = function (){}
 
 /* GET prices listing. */
-router.get('/prices', function(req, res, next) {
+router.prices = function(req: Request, res: any, next: any) {
   const where = []
   const data = []
 
@@ -81,6 +82,6 @@ router.get('/prices', function(req, res, next) {
       )
     }
   )
-})
+}
 
 export default router
