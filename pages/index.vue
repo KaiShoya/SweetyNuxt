@@ -151,8 +151,8 @@ export default {
           credit: Boolean(hotel.credit_card),
           hotel_name: hotel.name,
           utilization_time: value.utilization_time,
-          time_zone_start: value.time_zone_start.slice(0, -3),
-          time_zone_end: value.time_zone_end.slice(0, -3),
+          time_zone_start: this.interval2time(value.time_zone_start.hours, value.time_zone_start.minutes),
+          time_zone_end: this.interval2time(value.time_zone_end.hours, value.time_zone_end.minutes),
           min_price: value.min_price,
           max_price: value.max_price
         }
@@ -172,6 +172,11 @@ export default {
       return this.hotels[areaId].filter((element) => {
         return (element.id == id)
       })[0]
+    },
+    interval2time: function (hours, minutes) {
+      const h = hours || 0
+      const m = ('00' + (minutes || 0)).slice(-2)
+      return `${h}:${m}`
     }
   },
   computed: {

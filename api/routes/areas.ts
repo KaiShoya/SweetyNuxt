@@ -1,36 +1,38 @@
 import { Router } from 'express'
-import mysql from 'mysql'
 
-const connection = mysql.createConnection({
-  host: process.env.DATABASE_HOST,
-  user: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASS,
-  database: process.env.DATABASE_NAME,
-  port: Number(process.env.DATABASE_PORT || 3306)
-})
+const { Sequelize, QueryTypes } = require('sequelize')
+const sequelize = new Sequelize(
+  process.env.DATABASE_NAME,
+  process.env.DATABASE_USER,
+  process.env.DATABASE_PASS,
+  {
+    host: process.env.DATABASE_HOST,
+    dialect: 'postgres'
+  }
+)
 
 const router = Router()
 
-router.get('/areas', function(req, res, next) {
-  connection.query(
+router.get('/areas', async (req, res, next) => {
+  const rows = await sequelize.query(
     'SELECT * FROM area_master',
-    function(err, rows, fields) {
-      if (err) throw err
-      res.json(rows)
+    {
+      type: QueryTypes.SELECT
     }
   )
+  res.json(rows)
 })
 
-router.get('/area', function(req, res, next) {
+router.get('/area', async (req, res, next) => {
   const areaId = Number(req.query.id) || 1
-  connection.query(
+  const rows = await sequelize.query(
     'SELECT * FROM detail_area_master WHERE area_id = ?',
-    [areaId],
-    function(err, rows, fields) {
-      if (err) throw err
-      res.json(rows)
+    {
+      replacements: [areaId],
+      type: QueryTypes.SELECT
     }
   )
+  res.json(rows)
 })
 
 export default router
