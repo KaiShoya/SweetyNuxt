@@ -1,2 +1,2 @@
-release: build
-web: start
+release: yarn build
+web: yarn start
