@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon server/index.ts --watch server",
     "build": "nuxt-ts build",
-    "start": "cross-env NODE_ENV=production HOST=0.0.0.0 ts-node server/index.ts",
+    "start": "ts-node server/index.ts",
     "build-js": "babel api --extensions '.ts' -d api-dist && nuxt build",
     "start-js": "cross-env NODE_ENV=production HOST=0.0.0.0 node server/index.js",
     "generate": "nuxt-ts generate",
