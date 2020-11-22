@@ -1,19 +1,21 @@
 import { Router } from 'express'
-import mysql from 'mysql'
 import moment from 'moment'
 
-const connection = mysql.createConnection({
-  host: process.env.DATABASE_HOST,
-  user: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASS,
-  database: process.env.DATABASE_NAME,
-  port: Number(process.env.DATABASE_PORT || 3306)
-})
+const { Sequelize, QueryTypes } = require('sequelize')
+const sequelize = new Sequelize(
+  process.env.DATABASE_NAME,
+  process.env.DATABASE_USER,
+  process.env.DATABASE_PASS,
+  {
+    host: process.env.DATABASE_HOST,
+    dialect: 'postgres'
+  }
+)
 
 const router = Router()
 
 /* GET hotels listing. */
-router.get('/hotels', function(req, res, next) {
+router.get('/hotels', async (req, res, next) => {
   const where = ['deleted = false']
   const data = []
   // クレジットカード
@@ -64,7 +66,7 @@ router.get('/hotels', function(req, res, next) {
   }
 
   const sql =
-    'SELECT h.*, IFNULL(a.availability, 0) AS availability, a.room_count, a.updated_at AS updated_at_availability' +
+    'SELECT h.*, COALESCE(a.availability, 0) AS availability, a.room_count, a.updated_at AS updated_at_availability' +
     ' FROM hotels h' +
     ' LEFT JOIN availability a ON h.id = a.hotel_id' +
     ' LEFT JOIN (SELECT detail_area_id,area_id,hotel_id FROM hotel_areas ha LEFT JOIN detail_area_master dam ON ha.detail_area_id = dam.id) ha ON h.id = ha.hotel_id' +
@@ -72,44 +74,48 @@ router.get('/hotels', function(req, res, next) {
     ' ORDER BY id'
 
   moment.locale('ja')
-  connection.query(sql, data, function(err, rows, fields) {
-    if (err) throw err
-    res.json(
-      rows.map(function(element: any) {
-        return {
-          id: element.id,
-          name: element.name,
-          address: element.address,
-          phone: element.phone,
-          mapcode: element.mapcode,
-          lat: element.lat,
-          lon: element.lon,
-          credit_card: element.credit_card,
-          created_at: element.created_at,
-          updated_at: element.updated_at,
-          availability: element.availability,
-          room_count: element.room_count,
-          updated_at_availability:
-            element.updated_at_availability == null
-              ? null
-              : moment(new Date(element.updated_at_availability)).fromNow()
-        }
-      })
-    )
-  })
+  const rows = await sequelize.query(
+    sql,
+    {
+      replacements: data,
+      type: QueryTypes.SELECT
+    }
+  )
+  res.json(
+    rows.map(function(element: any) {
+      return {
+        id: element.id,
+        name: element.name,
+        address: element.address,
+        phone: element.phone,
+        mapcode: element.mapcode,
+        lat: element.lat,
+        lon: element.lon,
+        credit_card: element.credit_card,
+        created_at: element.created_at,
+        updated_at: element.updated_at,
+        availability: element.availability,
+        room_count: element.room_count,
+        updated_at_availability:
+          element.updated_at_availability == null
+            ? null
+            : moment(new Date(element.updated_at_availability)).fromNow()
+      }
+    })
+  )
 })
 
 /* GET hotel by ID. */
-router.get('/hotels/:id', function(req, res, next) {
+router.get('/hotels/:id', async (req, res, next) => {
   const id = parseInt(req.params.id)
-  connection.query(
+  const rows = await sequelize.query(
     'SELECT * FROM hotels WHERE id = ? ORDER BY id',
-    [id],
-    function(err, rows, fields) {
-      if (err) throw err
-      res.json(rows)
+    {
+      replacements: [id],
+      type: QueryTypes.SELECT
     }
   )
+  res.json(rows)
 })
 
 export default router
