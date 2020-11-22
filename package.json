@@ -4,6 +4,9 @@
   "description": "宮崎市内のカップル向けホテルの最安値を検索できるサービスです。",
   "author": "Kai Shoya",
   "private": true,
+  "engines": {
+    "yarn": "1.x"
+  },
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon server/index.ts --watch server",
     "build": "nuxt-ts build",
