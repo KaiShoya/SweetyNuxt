@@ -56,8 +56,8 @@ router.get('/prices', async (req, res, next) => {
     data.push(utilizationTime)
   } else {
     where.push(
-      '(CAST(utilization_time AS SIGNED) >= CAST(? AS SIGNED) ' +
-        'OR (utilization_time IN ("Free", "Lodging") AND (time_zone_end - INTERVAL ? MINUTE) >= ?))'
+      '((utilization_time NOT IN (\'Free\', \'Lodging\') AND (CAST(utilization_time AS INTEGER) >= CAST(? AS INTEGER))) ' +
+        'OR (utilization_time IN (\'Free\', \'Lodging\') AND (time_zone_end - INTERVAL \'' + Number(utilizationTime) + ' MINUTE\') >= ?))'
     )
     data.push(utilizationTime)
     data.push(utilizationTime)
