@@ -1,5 +1,7 @@
 const express = require('express')
 const consola = require('consola')
+require('reflect-metadata')
+const createConnection = require('typeorm')
 const { Nuxt, Builder } = require('nuxt')
 const app = express()
 
@@ -10,6 +12,8 @@ config.dev = process.env.NODE_ENV !== 'production'
 async function start() {
   // Init Nuxt.js
   const nuxt = new Nuxt(config)
+
+  await createConnection()
 
   const { host, port } = nuxt.options.server
 
