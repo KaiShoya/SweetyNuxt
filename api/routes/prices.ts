@@ -14,12 +14,12 @@ const sequelize = new Sequelize(
 const router = Router()
 
 /* GET prices listing. */
-router.get('/prices', async (req, res, next) => {
+router.get('/prices', async (req, res) => {
   const where = []
   const data = []
 
   where.push('hotel_id IN (?)')
-  data.push(JSON.parse(req.query.hotels))
+  data.push(JSON.parse(req.query.hotels as string))
 
   // 曜日
   if (req.query.dow != null && Number(req.query.dow) != 0) {

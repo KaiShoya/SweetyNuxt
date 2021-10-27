@@ -15,7 +15,7 @@ const sequelize = new Sequelize(
 const router = Router()
 
 /* GET hotels listing. */
-router.get('/hotels', async (req, res, next) => {
+router.get('/hotels', async (req, res) => {
   const where = ['deleted = false']
   const data = []
   // クレジットカード
@@ -24,7 +24,7 @@ router.get('/hotels', async (req, res, next) => {
   }
 
   // 空室情報
-  const availability = JSON.parse(req.query.availability || '[]')
+  const availability = JSON.parse(req.query.availability as string | undefined || '[]')
   if (req.query.availability != null) {
     if (availability.length == 0) {
       // 全てのチェックが外れていた場合に条件を反転させる
@@ -106,7 +106,7 @@ router.get('/hotels', async (req, res, next) => {
 })
 
 /* GET hotel by ID. */
-router.get('/hotels/:id', async (req, res, next) => {
+router.get('/hotels/:id', async (req, res) => {
   const id = parseInt(req.params.id)
   const rows = await sequelize.query(
     'SELECT * FROM hotels WHERE id = ? ORDER BY id',

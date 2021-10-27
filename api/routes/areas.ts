@@ -13,7 +13,7 @@ const sequelize = new Sequelize(
 
 const router = Router()
 
-router.get('/areas', async (req, res, next) => {
+router.get('/areas', async (req, res) => {
   const rows = await sequelize.query(
     'SELECT * FROM area_master',
     {
@@ -23,7 +23,7 @@ router.get('/areas', async (req, res, next) => {
   res.json(rows)
 })
 
-router.get('/area', async (req, res, next) => {
+router.get('/area', async (req, res) => {
   const areaId = Number(req.query.id) || 1
   const rows = await sequelize.query(
     'SELECT * FROM detail_area_master WHERE area_id = ?',
