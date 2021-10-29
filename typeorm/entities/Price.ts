@@ -8,10 +8,8 @@ import DayOfWeek from '../enum/DayOfWeek'
 
 @Entity('prices')
 export class Price extends Abstract {
-  @ManyToOne(type => Hotel, {
-    cascade: true
-  })
-  @JoinColumn()
+  @ManyToOne(() => Hotel)
+  @JoinColumn({ name: 'hotel_id' })
   public hotel!: Hotel
 
   @Column({ name: 'day_of_week', type: 'enum', enum: DayOfWeek })

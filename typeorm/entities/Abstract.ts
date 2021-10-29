@@ -18,7 +18,7 @@ export abstract class Abstract extends BaseEntity {
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp', precision: 0 })
   readonly updatedAt!: Date
 
-  @Column({ name: 'deleted_at', type: 'timestamp', precision: 0 })
+  @Column({ name: 'deleted_at', type: 'timestamp', precision: 0, nullable: true })
   public deletedAt?: Date | null
 }
 

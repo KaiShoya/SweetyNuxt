@@ -9,7 +9,7 @@ export class AreaMaster extends Abstract {
   public name!: string
 
   @OneToMany(
-    type => AreaMasterDetail,
+    () => AreaMasterDetail,
     areaMasterDetail => areaMasterDetail.areaMaster
   )
   areaMasterDetail?: AreaMasterDetail[]

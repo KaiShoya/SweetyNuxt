@@ -6,20 +6,13 @@ import Hotel from './Hotel'
 
 @Entity('hotel_areas')
 export class HotelArea extends Abstract {
-  @ManyToOne(type => AreaMasterDetail, {
-    cascade: true
-  })
-  @JoinColumn()
+  @ManyToOne(() => AreaMasterDetail)
+  @JoinColumn({ name: 'area_master_detail_id' })
   public areaMasterDetail!: AreaMasterDetail
 
-  @OneToOne(type => Hotel, {
-    cascade: true
-  })
-  @JoinColumn()
+  @OneToOne(() => Hotel)
+  @JoinColumn({ name: 'hotel_id' })
   public hotel!: Hotel
-
-  @Column({ type: 'varchar', length: 255 })
-  public name!: string
 }
 
 export default HotelArea

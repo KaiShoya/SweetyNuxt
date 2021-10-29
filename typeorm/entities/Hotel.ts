@@ -19,25 +19,34 @@ export class Hotel extends Abstract {
   @Column({ type: 'varchar', length: 50 })
   public mapcode!: string
 
-  @Column({ type: 'varchar', length: 50 })
-  public lat!: string
+  @Column({ type: 'varchar', length: 50, nullable: true })
+  public lat?: string
 
-  @Column({ type: 'varchar', length: 50 })
-  public lon!: string
+  @Column({ type: 'varchar', length: 50, nullable: true })
+  public lon?: string
 
   @Column({ name: 'credit_card', type: 'boolean', default: false })
   public creditCard!: boolean
 
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  public website?: string | null
+
   @OneToMany(
-    type => Price,
+    () => Price,
     prices => prices.hotel
   )
   prices?: Price[]
 
-  @OneToOne(type => Availability, availability => availability.hotel)
+  @OneToOne(
+    () => Availability,
+    availability => availability.hotel
+  )
   availability?: Availability
 
-  @OneToOne(type => HotelArea, hotelArea => hotelArea.hotel)
+  @OneToOne(
+    () => HotelArea,
+    hotelArea => hotelArea.hotel
+  )
   hotelArea?: HotelArea
 }
 
